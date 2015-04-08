@@ -55,7 +55,7 @@ def awscli_initialize(cli):
     # from pprint import pprint; import IPython; IPython.embed()
 
     # cli.register('building-command-table.helloworld', HelloWorld.add_command)
-    cli.register('building-command-table.helloworld', inject_commands)
+    cli.register('building-command-table.main', inject_commands)
 
 
 def inject_commands(command_table, session, **kwargs):
