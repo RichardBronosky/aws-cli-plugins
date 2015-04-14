@@ -50,12 +50,12 @@ class HelloWorldError(Exception):
 
 def awscli_initialize(cli):
     """The entry point for HelloWorld high level commands."""
-    notify()  # fires
+    notify()
     # drop to an IPython shell for debugging
     # from pprint import pprint; import IPython; IPython.embed()
 
-    # cli.register('building-command-table.helloworld', HelloWorld.add_command)
-    cli.register('building-command-table.main', inject_commands)
+    cli.register('building-command-table.main', HelloWorld.add_command)
+    # cli.register('building-command-table.main', inject_commands)
 
 
 def inject_commands(command_table, session, **kwargs):
@@ -63,7 +63,7 @@ def inject_commands(command_table, session, **kwargs):
 
     https://github.com/aws/aws-cli/blob/master/awscli/customizations/commands.py#L282-L283
     """
-    notify()  # does NOT fire
+    notify()
     command_table['say-hello'] = HelloWorld(session)
 
 
@@ -81,31 +81,18 @@ class HelloWorld(BasicCommand):
 
     def __init__(self, session):
         """Just trying to see what get's called."""
-        notify()  # does NOT fire
+        notify()
         super(HelloWorld, self).__init__(session)
 
     def _run_main(self, args, parsed_globals):
         """Run the command and report success."""
-        notify()  # does NOT fire
-        self.setup_services(args, parsed_globals)  # grasping at straws
+        notify()
         self._call(args, parsed_globals)
 
         return 0
 
-    def setup_services(self, args, parsed_globals):
-        """Create self.helloworld on the off chance that it matters.
-
-        https://github.com/aws/aws-cli/blob/develop/awscli/customizations/cloudtrail.py#L115
-        """
-        client_args = {
-            'region_name': None,
-            'verify': None
-        }
-        self.helloworld = self._session.create_client('helloworld',
-                                                      **client_args)
-
     def _call(self, options, parsed_globals):
         """Run the command."""
-        notify()  # does NOT fire
+        notify()
         notify('options', options)
         notify('parsed_globals', parsed_globals)
